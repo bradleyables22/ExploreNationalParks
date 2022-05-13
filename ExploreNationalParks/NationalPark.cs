@@ -17,19 +17,20 @@ namespace ExploreNationalParks
         public string Description { get; set; }
         
         [Required]
-        public int Acres { get; set; }
+        public decimal Acres { get; set; }
 
         [Required]
-        public int Km2 { get; set; }
+        public decimal Km2 { get; set; }
 
         [Required]
-        public int Latitude { get; set; }
+        public decimal Latitude { get; set; }
         
         [Required]
-        public int Longitude { get; set; }
+        public decimal Longitude { get; set; }
 
         [Required]
-        public DateTime DateEstablished { get; set; }
+        [StringLength(100)]
+        public string DateEstablished { get; set; }
 
         [Required]
         [StringLength(1200)]
@@ -40,10 +41,10 @@ namespace ExploreNationalParks
         public string NpsLink { get; set; }
         
         [Required]
-        [StringLength(50)]
+        [StringLength(20)]
         public string State { get; set; }
 
         [Required]
-        public int Visitors { get; set; }
+        public decimal Visitors { get; set; }
     }
 }
