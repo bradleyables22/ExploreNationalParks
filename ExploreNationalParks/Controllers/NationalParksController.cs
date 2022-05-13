@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ExploreNationalParks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExploreNationalParks.Controllers
 {
@@ -84,6 +85,7 @@ namespace ExploreNationalParks.Controllers
 
         //TODO: REBUILD WITH TOKENIZATION*****
         [HttpPut]
+        [Authorize]
         [Route("UpdatePark{Id}")]
         public async Task<IActionResult> PutNationalPark(int id, NationalPark nationalPark)
         {
@@ -113,24 +115,47 @@ namespace ExploreNationalParks.Controllers
             return NoContent();
         }
 
-        // POST: api/NationalParks
+        // Adds a park to the database
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize]
         [Route("AddaPark")]
-        public async Task<ActionResult<NationalPark>> PostNationalPark(NationalPark nationalPark)
+        public async Task<ActionResult<NationalPark>> AddNationalPark(string title, string description, decimal acres, decimal km2, decimal latitude, decimal longitude, DateTime dateEstablished, string imageURL, string npsLink, string state, decimal visitors)
         {
-          if (_context.nationalParks == null)
-          {
-              return Problem("Entity set 'NationalParkDBContext.nationalParks'  is null.");
-          }
-            _context.nationalParks.Add(nationalPark);
-            await _context.SaveChangesAsync();
+            
 
-            return CreatedAtAction("GetNationalPark", new { id = nationalPark.ParkID }, nationalPark);
+            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(description) && acres != 0 && km2 != 0 && latitude != 0 && longitude != 0 && !string.IsNullOrEmpty(dateEstablished.ToString()) && !string.IsNullOrEmpty(imageURL) && !string.IsNullOrEmpty(npsLink) && !string.IsNullOrEmpty(state) && visitors != 0)
+            {
+                int newIndex = await _context.nationalParks.CountAsync() + 2; //count plus 1 gives ur current index, add 1 to create the next id
+                NationalPark n = new NationalPark();
+
+                n.ParkID = newIndex;
+                n.Title = title;
+                n.Description = description;
+                n.Acres = acres;
+                n.Km2 = km2;
+                n.Latitude = latitude;
+                n.Longitude = longitude;
+                n.DateEstablished = dateEstablished.ToString("d"); //mmddyyyy
+                n.ImageURL = imageURL;
+                n.NpsLink = npsLink;
+                n.State = state;
+                n.Visitors = visitors;
+
+                await _context.AddAsync(n);
+                await _context.SaveChangesAsync();
+
+                return n;
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        // DELETE: api/NationalParks/5
+        // DELETE
         [HttpDelete]
+        [Authorize]
         [Route("DeleteParkBy{Id}")]
         public async Task<IActionResult> DeleteNationalPark(int id)
         {
