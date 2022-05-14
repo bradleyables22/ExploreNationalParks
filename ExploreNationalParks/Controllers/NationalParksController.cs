@@ -126,10 +126,10 @@ namespace ExploreNationalParks.Controllers
 
             if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(description) && acres != 0 && km2 != 0 && latitude != 0 && longitude != 0 && !string.IsNullOrEmpty(dateEstablished.ToString()) && !string.IsNullOrEmpty(imageURL) && !string.IsNullOrEmpty(npsLink) && !string.IsNullOrEmpty(state) && visitors != 0)
             {
-                int newIndex = await _context.nationalParks.CountAsync() + 2; //count plus 1 gives ur current index, add 1 to create the next id
+                
                 NationalPark n = new NationalPark();
 
-                n.ParkID = newIndex;
+                n.ParkID = 0; // will cause auto increment
                 n.Title = title;
                 n.Description = description;
                 n.Acres = acres;

@@ -13,13 +13,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder
-  .Services
-  .AddOptions<AppSettings>()
-  .Configure<IConfiguration>((options, configuration) => configuration.Bind("AppSettings", options));
+//builder
+//  .Services
+//  .AddOptions<AppSettings>()
+//  .Configure<IConfiguration>((options, configuration) => configuration.Bind("AppSettings", options));
 
-var appsettings = builder.Configuration.Get<AppSettings>();
-var key = Encoding.ASCII.GetBytes(appsettings.Secret);
+var appSettings = builder.Configuration["Appsettings:Secret"];
+//var appsettings = builder.Configuration.Get<AppSettings>();
+var key = Encoding.ASCII.GetBytes(appSettings);
 
 builder.Services.AddAuthentication(x =>
 {
