@@ -10,11 +10,11 @@ namespace ExploreNationalParks
 
         [Required]
         [StringLength(100)]
-        public string Title { get; set; }
+        public string? Title { get; set; }
         
         [Required]
         [StringLength(2000)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         
         [Required]
         public decimal Acres { get; set; }
@@ -30,19 +30,19 @@ namespace ExploreNationalParks
 
         [Required]
         [StringLength(100)]
-        public string DateEstablished { get; set; }
+        public string? DateEstablished { get; set; }
 
         [Required]
         [StringLength(1200)]
-        public string ImageURL { get; set; }
+        public string? ImageURL { get; set; }
 
         [Required]
         [StringLength(500)]
-        public string NpsLink { get; set; }
+        public string? NpsLink { get; set; }
         
         [Required]
         [StringLength(20)]
-        public string State { get; set; }
+        public string? State { get; set; }
 
         [Required]
         public decimal Visitors { get; set; }
