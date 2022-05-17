@@ -20,7 +20,5 @@ namespace ExploreNationalParks
         [StringLength(50)]
         public string Role { get; set; }
 
-        [NotMapped]
-        public string Token { get; set; }
     }
 }
